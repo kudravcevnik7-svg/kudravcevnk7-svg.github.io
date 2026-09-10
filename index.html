@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blesk96 — Клининговая компания в Екатеринбурге</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #0f172a;
+            --accent: #0ea5e9;
+            --accent-hover: #0284c7;
+            --bg-main: #ffffff;
+            --bg-soft: #f8fafc;
+            --bg-accent: #f0f9ff;
+            --text-main: #334155;
+            --text-light: #64748b;
+            --radius: 24px;
+            --radius-sm: 12px;
+            --shadow: 0 10px 40px -10px rgba(14, 165, 233, 0.15);
+            --shadow-hover: 0 20px 50px -12px rgba(14, 165, 233, 0.25);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; color: var(--text-main); background-color: var(--bg-main); line-height: 1.6; overflow-x: hidden; }
+        h1, h2, h3, h4, .logo, .btn { font-family: 'Manrope', sans-serif; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+        header { position: fixed; top: 0; left: 0; right: 0; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0,0,0,0.05); z-index: 1000; padding: 16px 0; }
+        .header-content { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 26px; font-weight: 800; color: var(--primary); text-decoration: none; display: flex; align-items: center; gap: 10px; }
+        .logo span { color: var(--accent); }
+        .logo-icon { width: 36px; height: 36px; background: var(--bg-accent); border-radius: 10px; display: flex; align-items: center; justify-content: center; }
+        .logo-icon svg { width: 20px; height: 20px; stroke: var(--accent); }
+        nav ul { display: flex; list-style: none; gap: 32px; }
+        nav a { text-decoration: none; color: var(--text-main); font-weight: 600; font-size: 15px; transition: color 0.2s; }
+        nav a:hover { color: var(--accent); }
+        .header-phone { font-weight: 700; font-size: 16px; color: var(--primary); text-decoration: none; background: var(--bg-soft); padding: 10px 20px; border-radius: 50px; transition: all 0.2s; }
+        .header-phone:hover { background: var(--bg-accent); color: var(--accent); }
+        .burger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 8px; }
+        .burger span { width: 24px; height: 2px; background: var(--primary); border-radius: 2px; }
+
+        .hero { padding: 160px 0 100px; background: linear-gradient(180deg, var(--bg-accent) 0%, var(--bg-main) 100%); }
+        .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+        .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: var(--bg-main); padding: 8px 16px; border-radius: 50px; font-size: 14px; font-weight: 600; color: var(--accent); box-shadow: 0 4px 12px rgba(0,0,0,0.05); margin-bottom: 24px; }
+        .hero-badge svg { width: 16px; height: 16px; stroke: var(--accent); }
+        .hero h1 { font-size: 52px; font-weight: 800; line-height: 1.1; color: var(--primary); margin-bottom: 24px; letter-spacing: -1px; }
+        .hero p { font-size: 18px; color: var(--text-light); margin-bottom: 40px; max-width: 480px; line-height: 1.7; }
+        .hero-buttons { display: flex; gap: 16px; }
+        .btn { display: inline-flex; align-items: center; justify-content: center; padding: 18px 36px; border-radius: 50px; text-decoration: none; font-weight: 700; font-size: 16px; transition: all 0.3s ease; border: none; cursor: pointer; }
+        .btn-primary { background: var(--accent); color: white; box-shadow: 0 8px 24px rgba(14, 165, 233, 0.3); }
+        .btn-primary:hover { background: var(--accent-hover); transform: translateY(-2px); box-shadow: 0 12px 32px rgba(14, 165, 233, 0.4); }
+        .btn-outline { background: transparent; color: var(--primary); border: 2px solid #e2e8f0; }
+        .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+        
+        .hero-image { position: relative; border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); aspect-ratio: 4/3; background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 50%, #7dd3fc 100%); display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 16px; }
+        .hero-image-placeholder { text-align: center; color: #0369a1; padding: 40px; }
+        .hero-image-placeholder svg { width: 80px; height: 80px; stroke: #0284c7; margin-bottom: 16px; opacity: 0.6; }
+        .hero-image-placeholder p { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+        .hero-image-placeholder small { font-size: 13px; color: #0c4a6e; opacity: 0.7; }
+
+        .features { padding: 40px 0 80px; margin-top: -40px; position: relative; z-index: 10; }
+        .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+        .feature-card { background: var(--bg-main); padding: 32px; border-radius: var(--radius); box-shadow: 0 4px 20px rgba(0,0,0,0.04); border: 1px solid rgba(0,0,0,0.03); text-align: center; transition: transform 0.3s; }
+        .feature-card:hover { transform: translateY(-5px); }
+        .feature-icon { width: 56px; height: 56px; margin: 0 auto 16px; stroke: var(--accent); stroke-width: 1.5; }
+        .feature-card h3 { font-size: 18px; margin-bottom: 8px; color: var(--primary); }
+        .feature-card p { font-size: 14px; color: var(--text-light); }
+
+        /* Слайдер До/После */
+        .before-after-section { padding: 80px 0; background: var(--bg-soft); }
+        .before-after-container { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
+        .comparison-slider { 
+            position: relative; 
+            width: 100%; 
+            aspect-ratio: 16 / 9; 
+            border-radius: 20px; 
+            overflow: hidden; 
+            box-shadow: 0 20px 60px -15px rgba(0,0,0,0.15); 
+            cursor: ew-resize; 
+            background-color: #e2e8f0; 
+        }
+        .comparison-image { 
+            position: absolute; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            background-size: cover; 
+            background-position: center; 
+        }
+        .comparison-image.before { 
+            width: 50%; 
+            border-right: 2px solid white; 
+            z-index: 2; 
+            box-shadow: 5px 0 20px rgba(0,0,0,0.2); 
+        }
+        .comparison-image.after { z-index: 1; }
+        .slider-handle { 
+            position: absolute; 
+            top: 50%; 
+            left: 50%; 
+            transform: translate(-50%, -50%); 
+            width: 48px; 
+            height: 48px; 
+            background: white; 
+            border-radius: 50%; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2); 
+            z-index: 3; 
+            pointer-events: none; 
+        }
+        .slider-handle svg { width: 20px; height: 20px; stroke: var(--accent); stroke-width: 3; }
+        .slider-label { 
+            position: absolute; 
+            bottom: 20px; 
+            padding: 6px 16px; 
+            background: rgba(0,0,0,0.6); 
+            backdrop-filter: blur(4px);
+            color: white;
+            border-radius: 30px; 
+            font-weight: 700; 
+            font-size: 12px; 
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            z-index: 4; 
+            pointer-events: none;
+        }
+        .slider-label.before-label { left: 20px; }
+        .slider-label.after-label { right: 20px; background: var(--accent); }
+
+        section { padding: 100px 0; }
+        .section-header { text-align: center; max-width: 700px; margin: 0 auto 64px; }
+        .section-header h2 { font-size: 40px; font-weight: 800; color: var(--primary); margin-bottom: 16px; letter-spacing: -0.5px; }
+        .section-header p { font-size: 18px; color: var(--text-light); }
+
+        .services { background: var(--bg-soft); }
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; }
+        .service-card { background: var(--bg-main); border-radius: var(--radius); padding: 40px 32px; transition: all 0.3s ease; border: 1px solid transparent; display: flex; flex-direction: column; }
+        .service-card:hover { box-shadow: var(--shadow-hover); transform: translateY(-8px); border-color: rgba(14, 165, 233, 0.2); }
+        .service-icon { width: 64px; height: 64px; margin-bottom: 24px; stroke: var(--accent); stroke-width: 1.5; }
+        .service-card h3 { font-size: 22px; font-weight: 700; margin-bottom: 12px; color: var(--primary); }
+        .service-card p { font-size: 15px; color: var(--text-light); margin-bottom: 24px; flex-grow: 1; }
+        .service-price { font-size: 20px; font-weight: 800; color: var(--accent); font-family: 'Manrope', sans-serif; }
+        .service-price span { font-size: 14px; color: var(--text-light); font-weight: 500; }
+
+        .pricing { background: var(--bg-soft); }
+        .pricing-table { background: var(--bg-main); border-radius: var(--radius); overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.04); }
+        .pricing-row { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; padding: 24px 40px; border-bottom: 1px solid #f1f5f9; align-items: center; }
+        .pricing-row.header { background: var(--primary); color: white; font-weight: 700; font-size: 15px; }
+        .pricing-row:last-child { border-bottom: none; }
+        .pricing-row > div { font-size: 16px; }
+        .pricing-row > div:first-child { font-weight: 600; color: var(--primary); }
+
+        .faq-list { max-width: 800px; margin: 0 auto; }
+        .faq-item { background: var(--bg-main); border: 1px solid #f1f5f9; border-radius: var(--radius-sm); margin-bottom: 16px; overflow: hidden; transition: all 0.3s; }
+        .faq-item:hover { border-color: var(--accent); }
+        .faq-question { padding: 24px 32px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 700; font-size: 17px; color: var(--primary); font-family: 'Manrope', sans-serif; }
+        .faq-question::after { content: '+'; font-size: 28px; color: var(--accent); font-weight: 400; transition: transform 0.3s; }
+        .faq-item.active .faq-question::after { transform: rotate(45deg); }
+        .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.4s ease; padding: 0 32px; color: var(--text-light); line-height: 1.7; font-size: 15px; }
+        .faq-item.active .faq-answer { max-height: 300px; padding: 0 32px 24px; }
+
+        .cta-section { background: var(--primary); color: white; text-align: center; border-radius: var(--radius); margin: 0 24px 100px; padding: 80px 40px; position: relative; overflow: hidden; }
+        .cta-section::before { content: ''; position: absolute; top: -50%; right: -20%; width: 600px; height: 600px; background: radial-gradient(circle, rgba(14, 165, 233, 0.2) 0%, transparent 70%); border-radius: 50%; }
+        .cta-section h2 { font-size: 36px; font-weight: 800; margin-bottom: 16px; position: relative; z-index: 2; }
+        .cta-section p { font-size: 18px; color: #94a3b8; margin-bottom: 40px; max-width: 600px; margin-left: auto; margin-right: auto; position: relative; z-index: 2; }
+        .cta-buttons { display: flex; justify-content: center; gap: 16px; position: relative; z-index: 2; }
+        .btn-white { background: white; color: var(--primary); }
+        .btn-white:hover { background: #f1f5f9; transform: translateY(-2px); }
+
+        footer { background: var(--bg-soft); padding: 40px 0 20px; border-top: 1px solid #e2e8f0; }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+        .footer-brand p { color: var(--text-light); font-size: 14px; margin-top: 16px; max-width: 300px; }
+        .footer-col h4 { font-size: 16px; font-weight: 700; color: var(--primary); margin-bottom: 20px; }
+        .footer-col ul { list-style: none; }
+        .footer-col li { margin-bottom: 12px; }
+        .footer-col a { color: var(--text-light); text-decoration: none; font-size: 15px; transition: color 0.2s; }
+        .footer-col a:hover { color: var(--accent); }
+        .footer-bottom { text-align: center; padding-top: 20px; border-top: 1px solid #e2e8f0; color: var(--text-light); font-size: 14px; }
+
+        .urgent-banner {
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+            margin: 40px 0;
+            border-radius: var(--radius);
+        }
+        .urgent-banner h3 { font-size: 28px; margin-bottom: 12px; font-weight: 800; }
+        .urgent-banner p { font-size: 18px; opacity: 0.95; }
+        .urgent-banner strong { font-weight: 700; }
+
+        .promotions { background: var(--bg-soft); }
+        .promo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+        .promo-card {
+            background: white; border-radius: var(--radius); padding: 32px; border: 2px solid #e2e8f0;
+            position: relative; overflow: hidden; transition: all 0.3s;
+        }
+        .promo-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-hover); border-color: var(--accent); }
+        .promo-badge {
+            position: absolute; top: 20px; right: 20px; background: #ef4444; color: white;
+            padding: 6px 16px; border-radius: 50px; font-weight: 700; font-size: 14px;
+        }
+        .promo-icon {
+            width: 64px; height: 64px; margin: 0 auto 20px; background: var(--bg-accent);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            stroke: var(--accent); stroke-width: 1.5;
+        }
+        .promo-card h3 { font-size: 22px; margin-bottom: 12px; color: var(--primary); }
+        .promo-card p { color: var(--text-light); font-size: 15px; line-height: 1.6; }
+
+        .calculator { background: white; }
+        .calculator-box {
+            max-width: 800px; margin: 0 auto; background: var(--bg-soft);
+            padding: 40px; border-radius: var(--radius); box-shadow: var(--shadow);
+        }
+        .calc-row { margin-bottom: 24px; }
+        .calc-row label { display: block; font-weight: 600; margin-bottom: 8px; color: var(--primary); }
+        .calc-row select, .calc-row input {
+            width: 100%; padding: 14px; border: 1px solid #cbd5e1; border-radius: 8px;
+            font-size: 16px; font-family: inherit;
+        }
+        .calc-row select:focus, .calc-row input:focus { outline: none; border-color: var(--accent); }
+        .calc-checkboxes { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .calc-checkbox {
+            display: flex; align-items: center; gap: 10px; padding: 12px;
+            background: white; border-radius: 8px; cursor: pointer;
+        }
+        .calc-checkbox input[type="checkbox"] { width: 20px; height: 20px; cursor: pointer; }
+        .calc-total {
+            background: var(--primary); color: white; padding: 24px;
+            border-radius: 12px; text-align: center; margin-top: 24px;
+        }
+        .calc-total-label { font-size: 16px; margin-bottom: 8px; opacity: 0.9; }
+        .calc-total-price { font-size: 42px; font-weight: 800; font-family: 'Manrope', sans-serif; }
+
+        .reviews { background: var(--bg-soft); }
+        .reviews-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; }
+        .review-card {
+            background: white; padding: 32px; border-radius: var(--radius);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+        }
+        .review-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+        .review-author { font-weight: 700; color: var(--primary); font-size: 16px; }
+        .review-date { color: var(--text-light); font-size: 14px; }
+        .review-rating { display: flex; gap: 4px; margin-bottom: 16px; }
+        .review-star { width: 18px; height: 18px; fill: #fbbf24; stroke: #fbbf24; }
+        .review-text { color: var(--text-light); line-height: 1.7; font-size: 15px; font-style: italic; }
+        .review-address {
+            margin-top: 16px; padding-top: 16px; border-top: 1px solid #e2e8f0;
+            font-size: 13px; color: var(--text-light); display: flex; align-items: center; gap: 6px;
+        }
+        .review-address svg { width: 14px; height: 14px; stroke: var(--text-light); }
+
+        .objections-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+        .objection-card {
+            background: white; padding: 28px; border-radius: var(--radius);
+            border-left: 4px solid var(--accent); box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+        }
+        .objection-question {
+            font-size: 18px; font-weight: 700; color: var(--primary); margin-bottom: 12px;
+            display: flex; align-items: center; gap: 10px;
+        }
+        .objection-question svg { width: 28px; height: 28px; stroke: var(--accent); flex-shrink: 0; }
+        .objection-answer { color: var(--text-light); line-height: 1.7; font-size: 15px; }
+
+        .floating-chat {
+            position: fixed; bottom: 30px; right: 30px; z-index: 9999;
+            display: flex; flex-direction: column; align-items: flex-end; gap: 12px;
+        }
+        .chat-menu {
+            display: flex; flex-direction: column; gap: 12px;
+            opacity: 0; visibility: hidden; transform: translateY(20px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .chat-menu.active {
+            opacity: 1; visibility: visible; transform: translateY(0);
+        }
+        .chat-btn {
+            width: 50px; height: 50px; border-radius: 50%; display: flex;
+            align-items: center; justify-content: center; color: white; font-size: 24px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15); transition: all 0.2s;
+            text-decoration: none; position: relative;
+        }
+        .chat-btn:hover { transform: scale(1.1); }
+        .chat-btn::after {
+            content: attr(data-tooltip);
+            position: absolute; right: 60px; background: var(--primary); color: white;
+            padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 600;
+            white-space: nowrap; opacity: 0; visibility: hidden; transition: all 0.2s;
+            pointer-events: none;
+        }
+        .chat-btn:hover::after { opacity: 1; visibility: visible; right: 65px; }
+        .chat-toggle {
+            width: 64px; height: 64px; border-radius: 50%; background: var(--accent);
+            color: white; border: none; cursor: pointer; display: flex; align-items: center;
+            justify-content: center; font-size: 28px; box-shadow: 0 8px 24px rgba(14, 165, 233, 0.4);
+            transition: all 0.3s; z-index: 2;
+        }
+        .chat-toggle:hover { transform: scale(1.05); background: var(--accent-hover); }
+        .chat-toggle i { transition: transform 0.3s; }
+        .chat-toggle.active i { transform: rotate(45deg); }
+
+        .float-telegram { background: #0088cc; }
+        .float-whatsapp { background: #25d366; }
+        .float-phone { background: #ef4444; }
+        .float-vk { background: #4a76a8; }
+        .float-max { background: #0077FF; }
+
+        @media (max-width: 968px) {
+            .hero-grid { grid-template-columns: 1fr; text-align: center; }
+            .hero p { margin: 0 auto 40px; }
+            .hero-buttons { justify-content: center; }
+            .hero-image { max-width: 500px; margin: 0 auto; }
+            .features-grid { grid-template-columns: 1fr; }
+            .pricing-row { grid-template-columns: 1fr; gap: 8px; padding: 24px; }
+            .pricing-row.header { display: none; }
+            .pricing-row > div::before { content: attr(data-label); font-weight: 700; color: var(--primary); display: block; margin-bottom: 4px; font-size: 14px; }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+            .calc-checkboxes { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 768px) {
+            nav ul { position: fixed; top: 70px; left: 0; right: 0; background: white; flex-direction: column; padding: 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); transform: translateY(-150%); transition: transform 0.3s; gap: 20px; text-align: center; }
+            nav ul.active { transform: translateY(0); }
+            .burger { display: flex; }
+            .header-phone { display: none; }
+            .hero h1 { font-size: 36px; }
+            .section-header h2 { font-size: 32px; }
+            .footer-grid { grid-template-columns: 1fr; text-align: center; }
+            .footer-brand p { margin: 16px auto 0; }
+            .cta-section { margin: 0 16px 60px; padding: 60px 24px; }
+            .floating-chat { bottom: 20px; right: 20px; }
+            .chat-btn { width: 45px; height: 45px; font-size: 20px; }
+            .chat-toggle { width: 56px; height: 56px; font-size: 24px; }
+            .chat-btn::after { display: none; } 
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container header-content">
+            <a href="#" class="logo">
+                <div class="logo-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                    </svg>
+                </div>
+                Blesk<span>96</span>
+            </a>
+            <nav>
+                <ul id="nav-menu">
+                    <li><a href="#services">Услуги</a></li>
+                    <li><a href="#calculator">Калькулятор</a></li>
+                    <li><a href="#reviews">Отзывы</a></li>
+                    <li><a href="#pricing">Цены</a></li>
+                    <li><a href="#faq">Вопросы</a></li>
+                </ul>
+            </nav>
+            <a href="tel:+79520094813" class="header-phone">+7 (952) 009-48-13</a>
+            <div class="burger" onclick="toggleMenu()">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+    </header>
+
+    <div class="floating-chat">
+        <div class="chat-menu" id="chatMenu">
+            <a href="https://t.me/Blesk96_bot" class="chat-btn float-telegram" data-tooltip="Telegram"><i class="fab fa-telegram-plane"></i></a>
+            <a href="https://wa.me/79520094813" class="chat-btn float-whatsapp" data-tooltip="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+            <a href="https://max.ru" class="chat-btn float-max" data-tooltip="MAX"><i class="fas fa-comment"></i></a>
+            <a href="https://vk.com/blesk96" class="chat-btn float-vk" data-tooltip="ВКонтакте"><i class="fab fa-vk"></i></a>
+            <a href="tel:+79520094813" class="chat-btn float-phone" data-tooltip="Позвонить"><i class="fas fa-phone"></i></a>
+        </div>
+        <button class="chat-toggle" id="chatToggle" aria-label="Открыть чат">
+            <i class="fas fa-comments"></i>
+        </button>
+    </div>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-grid">
+                <div class="hero-content">
+                    <div class="hero-badge">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                        </svg>
+                        Работаем в Екатеринбурге и пригороде
+                    </div>
+                    <h1>Идеальная чистота вашего дома без лишних хлопот</h1>
+                    <p>Профессиональный клининг с гарантией результата. Проверенные специалисты, безопасная химия и оплата только после принятия работы.</p>
+                    <div class="hero-buttons">
+                        <a href="#calculator" class="btn btn-primary">Рассчитать стоимость</a>
+                        <a href="#before-after" class="btn btn-outline">Смотреть работы</a>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <div class="hero-image-placeholder">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                            <circle cx="8.5" cy="8.5" r="1.5"/>
+                            <polyline points="21 15 16 10 5 21"/>
+                        </svg>
+                        <p>Фото чистой квартиры</p>
+                        <small>Здесь будет ваше реальное фото</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="urgent-banner">
+            <h3>Срочная уборка за 3 часа</h3>
+            <p>Закажите до 12:00 — приедем сегодня же! Звоните: <strong>+7 (952) 009-48-13</strong></p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="features-grid">
+            <div class="feature-card">
+                <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/>
+                </svg>
+                <h3>Проверенные клинеры</h3>
+                <p>Каждый сотрудник проходит строгий отбор, проверку службы безопасности и обучение.</p>
+            </div>
+            <div class="feature-card">
+                <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+                </svg>
+                <h3>Безопасная химия</h3>
+                <p>Используем гипоаллергенные профессиональные средства, безопасные для детей и животных.</p>
+            </div>
+            <div class="feature-card">
+                <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/>
+                </svg>
+                <h3>Оплата по факту</h3>
+                <p>Никаких предоплат. Вы платите только после того, как примете работу и останетесь довольны.</p>
+            </div>
+        </div>
+    </div>
+
+    <section id="before-after" class="before-after-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Результаты нашей работы</h2>
+                <p>Оцените разницу до и после профессиональной уборки</p>
+            </div>
+            <div class="before-after-container">
+                <div class="comparison-slider" id="comparisonSlider">
+                    
+                    <div class="comparison-image after" 
+                         style="background-image: url('/kitchen-after.jpg');">
+                    </div>
+                    
+                    <div class="comparison-image before" 
+                         style="background-image: url('/kitchen-before.jpg'); width: 50%;">
+                    </div>
+                    
+                    <div class="slider-handle" id="sliderHandle">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="15 18 9 12 15 6"></polyline>
+                            <polyline points="19 18 13 12 19 6"></polyline>
+                            <polyline points="5 18 9 12 5 6"></polyline>
+                            <polyline points="9 18 5 12 9 6"></polyline>
+                        </svg>
+                    </div>
+                    
+                    <div class="slider-label before-label">ДО</div>
+                    <div class="slider-label after-label">ПОСЛЕ</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="services" class="services">
+        <div class="container">
+            <div class="section-header">
+                <h2>Наши услуги</h2>
+                <p>Мы берем на себя всю грязную работу, чтобы вы могли наслаждаться свободным временем</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 6h18M5 6v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6M9 6V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/><path d="M10 12h4M10 16h4"/>
+                    </svg>
+                    <h3>Генеральная уборка</h3>
+                    <p>Комплексная очистка всех поверхностей, сантехники, кухни и труднодоступных мест от сложных загрязнений.</p>
+                    <div class="service-price">от 4 500 ₽ <span>/ квартира</span></div>
+                </div>
+                <div class="service-card">
+                    <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+                    </svg>
+                    <h3>После ремонта</h3>
+                    <p>Удаление строительной пыли, следов краски, цемента и штукатурки. Полная подготовка к заселению.</p>
+                    <div class="service-price">от 6 000 ₽ <span>/ квартира</span></div>
+                </div>
+                <div class="service-card">
+                    <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+                    </svg>
+                    <h3>Поддерживающая</h3>
+                    <p>Регулярная уборка для поддержания идеального порядка. Идеально для еженедельного или ежемесячного обслуживания.</p>
+                    <div class="service-price">от 2 500 ₽ <span>/ квартира</span></div>
+                </div>
+                <div class="service-card">
+                    <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 9V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v3"/><path d="M2 11v5a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-5a2 2 0 0 0-4 0v2H8v-2a2 2 0 0 0-4 0Z"/><path d="M12 18v3"/>
+                    </svg>
+                    <h3>Химчистка мебели</h3>
+                    <p>Глубокая экстракторная чистка диванов, кресел, матрасов и ковров. Удаление пятен и неприятных запахов.</p>
+                    <div class="service-price">от 2 500 ₽ <span>/ предмет</span></div>
+                </div>
+                <div class="service-card">
+                    <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/>
+                    </svg>
+                    <h3>Мойка окон</h3>
+                    <p>Профессиональная мойка окон, витрин, балконов и лоджий любой сложности. Без разводов.</p>
+                    <div class="service-price">от 300 ₽ <span>/ створка</span></div>
+                </div>
+                <div class="service-card">
+                    <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 21h18M5 21v-8a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v8M9 10a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2H9z"/>
+                    </svg>
+                    <h3>Для бизнеса</h3>
+                    <p>Клининг офисов, торговых помещений и складов. Работаем по договору, предоставляем закрывающие документы.</p>
+                    <div class="service-price">Индивидуально</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="calculator" class="calculator">
+        <div class="container">
+            <div class="section-header">
+                <h2>Рассчитайте стоимость уборки</h2>
+                <p>Укажите параметры квартиры и получите предварительную цену</p>
+            </div>
+            <div class="calculator-box">
+                <div class="calc-row">
+                    <label for="cleaningType">Тип уборки:</label>
+                    <select id="cleaningType" onchange="calculatePrice()">
+                        <option value="4500">Генеральная уборка</option>
+                        <option value="6000">После ремонта</option>
+                        <option value="2500">Поддерживающая уборка</option>
+                    </select>
+                </div>
+                <div class="calc-row">
+                    <label for="rooms">Количество комнат:</label>
+                    <select id="rooms" onchange="calculatePrice()">
+                        <option value="1">1 комната</option>
+                        <option value="2">2 комнаты</option>
+                        <option value="3">3 комнаты</option>
+                        <option value="4">4 комнаты и более</option>
+                    </select>
+                </div>
+                <div class="calc-row">
+                    <label>Дополнительные услуги:</label>
+                    <div class="calc-checkboxes">
+                        <label class="calc-checkbox"><input type="checkbox" id="oven" value="500" onchange="calculatePrice()"><span>Духовка (+500 ₽)</span></label>
+                        <label class="calc-checkbox"><input type="checkbox" id="fridge" value="500" onchange="calculatePrice()"><span>Холодильник (+500 ₽)</span></label>
+                        <label class="calc-checkbox"><input type="checkbox" id="windows" value="300" onchange="calculatePrice()"><span>Окна (за створку, +300 ₽)</span></label>
+                        <label class="calc-checkbox"><input type="checkbox" id="balcony" value="1000" onchange="calculatePrice()"><span>Балкон/лоджия (+1000 ₽)</span></label>
+                    </div>
+                </div>
+                <div class="calc-total">
+                    <div class="calc-total-label">Примерная стоимость:</div>
+                    <div class="calc-total-price" id="totalPrice">4 500 ₽</div>
+                    <p style="margin-top: 12px; font-size: 14px; opacity: 0.8;">Точная цена после оценки по фото</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="promotions">
+        <div class="container">
+            <div class="section-header">
+                <h2>Акции и скидки</h2>
+                <p>Выгодные предложения для наших клиентов</p>
+            </div>
+            <div class="promo-grid">
+                <div class="promo-card">
+                    <div class="promo-badge">-15%</div>
+                    <svg class="promo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+                    </svg>
+                    <h3>Первая уборка</h3>
+                    <p>Скидка 15% на первую уборку для новых клиентов. Просто скажите менеджеру при заказе!</p>
+                </div>
+                <div class="promo-card">
+                    <div class="promo-badge">500 ₽</div>
+                    <svg class="promo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                    </svg>
+                    <h3>Приведи друга</h3>
+                    <p>Порекомендуйте нас друзьям и получите 500 ₽ на следующую уборку после их первого заказа</p>
+                </div>
+                <div class="promo-card">
+                    <div class="promo-badge">-20%</div>
+                    <svg class="promo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+                    </svg>
+                    <h3>Абонемент</h3>
+                    <p>Закажите абонемент на 4 уборки в месяц и получите скидку 20% на все услуги</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="reviews" class="reviews">
+        <div class="container">
+            <div class="section-header">
+                <h2>Отзывы клиентов</h2>
+                <p>Что говорят о нас те, кто уже воспользовался нашими услугами</p>
+            </div>
+            <div class="reviews-grid">
+                <div class="review-card">
+                    <div class="review-header">
+                        <div><div class="review-author">Анна М.</div><div class="review-date">15 января 2026</div></div>
+                        <div class="review-rating">
+                            <svg class="review-star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                            <svg class="review-star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                            <svg class="review-star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                            <svg class="review-star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                            <svg class="review-star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                        </div>
+                    </div>
+                    <div class="review-text">"Заказывала генеральную уборку после ремонта. Ребята справились за 4 часа, теперь квартира сияет! Очень порадовала цена и пунктуальность."</div>
+                    <div class="review-address">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                        ул. Ленина, 15
+                    </div>
+                </div>
+                <div class="review-card">
+                    <div class="review-header">
+                        <div><div class="review-author">Сергей К.</div><div class="review-date">10 января 2026</div></div>
+                        <div class="review-rating">
+                            <svg class="review-star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                            <svg class="review-star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                            <svg class="review-star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                            <svg class="review-star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                            <svg class="review-star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                        </div>
+                    </div>
+                    <div class="review-text">"Отличная работа! Заказывал уборку после съёма квартиры. Клинеры молодцы, всё отмыли, даже то, что я сам не заметил. Рекомендую!"</div>
+                    <div class="review-address">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                        район ВИЗ
+                    </div>
+                </div>
+                <div class="review-card">
+                    <div class="review-header">
+                        <div><div class="review-author">Елена В.</div><div class="review-date">5 января 2026</div></div>
+                        <div class="review-rating">
+                            <svg class="review-star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                            <svg class="review-star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                            <svg class="review-star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                            <svg class="review-star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                            <svg class="review-star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                        </div>
+                    </div>
+                    <div class="review-text">"Пользуюсь услугами Blesk96 уже третий месяц. Очень удобно, что можно заказать регулярную уборку. Всегда чисто, аккуратно и вовремя."</div>
+                    <div class="review-address">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                        Уралмаш
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="objections">
+        <div class="container">
+            <div class="section-header">
+                <h2>Ответы на ваши вопросы</h2>
+                <p>Развеиваем сомнения и отвечаем на популярные вопросы</p>
+            </div>
+            <div class="objections-grid">
+                <div class="objection-card">
+                    <div class="objection-question">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                        А если мне не понравится результат?
+                    </div>
+                    <div class="objection-answer">Мы даём гарантию на все виды работ. Если вы заметите недочёты, мы бесплатно вернёмся и устраним их в течение 24 часов.</div>
+                </div>
+                <div class="objection-card">
+                    <div class="objection-question">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                        А если что-то сломается или испортится?
+                    </div>
+                    <div class="objection-answer">Несём полную материальную ответственность за ваше имущество. Все сотрудники проходят инструктаж по бережному обращению с вещами.</div>
+                </div>
+                <div class="objection-card">
+                    <div class="objection-question">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                        А вдруг что-то украдут?
+                    </div>
+                    <div class="objection-answer">Все наши клинеры проходят строгую проверку: паспорт, регистрация, служба безопасности. Мы несём уголовную ответственность за действия сотрудников.</div>
+                </div>
+                <div class="objection-card">
+                    <div class="objection-question">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                        А безопасно ли это для детей и животных?
+                    </div>
+                    <div class="objection-answer">Мы используем только сертифицированные гипоаллергенные средства. Они безопасны после высыхания.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="pricing" class="pricing">
+        <div class="container">
+            <div class="section-header">
+                <h2>Прозрачные цены</h2>
+                <p>Никаких сюрпризов. Стоимость фиксируется до начала работ.</p>
+            </div>
+            <div class="pricing-table">
+                <div class="pricing-row header"><div>Вид уборки</div><div>1-комн.</div><div>2-комн.</div><div>3-комн.</div></div>
+                <div class="pricing-row"><div data-label="Вид уборки:"> Генеральная</div><div data-label="1-комн.:">4 500 – 5 500 ₽</div><div data-label="2-комн.:">6 500 – 8 000 ₽</div><div data-label="3-комн.:">8 500 – 10 000 ₽</div></div>
+                <div class="pricing-row"><div data-label="Вид уборки:"> После ремонта</div><div data-label="1-комн.:">6 000 – 8 000 ₽</div><div data-label="2-комн.:">8 000 – 11 000 ₽</div><div data-label="3-комн.:">11 000 – 14 000 ₽</div></div>
+                <div class="pricing-row"><div data-label="Вид уборки:"> Поддерживающая</div><div data-label="1-комн.:">2 500 – 3 000 ₽</div><div data-label="2-комн.:">3 500 – 4 500 ₽</div><div data-label="3-комн.:">4 500 – 5 500 ₽</div></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="faq">
+        <div class="container">
+            <div class="section-header"><h2>Частые вопросы</h2></div>
+            <div class="faq-list">
+                <div class="faq-item"><div class="faq-question">Нужно ли предоставлять свои моющие средства?</div><div class="faq-answer">Нет, наши специалисты приезжают полностью укомплектованными: профессиональная химия, пылесосы, швабры и перчатки.</div></div>
+                <div class="faq-item"><div class="faq-question">Как гарантируется безопасность имущества?</div><div class="faq-answer">Все наши клинеры проходят строгую проверку. Мы несем материальную ответственность за сохранность вашего имущества.</div></div>
+                <div class="faq-item"><div class="faq-question">Что если не понравится результат?</div><div class="faq-answer">Мы даем гарантию на все виды работ. Если есть недочеты, бесплатно вернемся и устраним их в течение 24 часов.</div></div>
+                <div class="faq-item"><div class="faq-question">Работаете ли в выходные?</div><div class="faq-answer">Да, мы работаем 7 дней в неделю, включая праздники. Рекомендуем бронировать дату заранее.</div></div>
+            </div>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="cta-section">
+            <h2>Готовы навести идеальный порядок?</h2>
+            <p>Оставьте заявку прямо сейчас, и мы рассчитаем точную стоимость уборки вашей квартиры за 5 минут.</p>
+            <div class="cta-buttons">
+                <a href="https://t.me/Blesk96_bot" class="btn btn-white">Написать в Telegram</a>
+                <a href="tel:+79520094813" class="btn btn-outline" style="border-color: rgba(255,255,255,0.3); color: white;">Позвонить</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="#" class="logo">
+                        <div class="logo-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                            </svg>
+                        </div>
+                        Blesk<span>96</span>
+                    </a>
+                    <p>Профессиональный клининговый сервис в Екатеринбурге. Делаем ваш дом чистым, безопасным и уютным.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Услуги</h4>
+                    <ul>
+                        <li><a href="#services">Генеральная уборка</a></li>
+                        <li><a href="#services">После ремонта</a></li>
+                        <li><a href="#services">Химчистка мебели</a></li>
+                        <li><a href="#services">Мойка окон</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Компания</h4>
+                    <ul>
+                        <li><a href="#calculator">Калькулятор</a></li>
+                        <li><a href="#reviews">Отзывы</a></li>
+                        <li><a href="#pricing">Цены</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Контакты</h4>
+                    <ul>
+                        <li><a href="tel:+79520094813">+7 (952) 009-48-13</a></li>
+                        <li><a href="mailto:info@blesk96.ru">info@blesk96.ru</a></li>
+                        <li>Екатеринбург, ежедневно 9:00 – 21:00</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 Blesk96. Все права защищены. | Самозанятый Кудрявцев Николай Игоревич | ИНН 222334713443</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const chatToggle = document.getElementById('chatToggle');
+        const chatMenu = document.getElementById('chatMenu');
+        
+        chatToggle.addEventListener('click', () => {
+            chatToggle.classList.toggle('active');
+            chatMenu.classList.toggle('active');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!chatToggle.contains(e.target) && !chatMenu.contains(e.target)) {
+                chatToggle.classList.remove('active');
+                chatMenu.classList.remove('active');
+            }
+        });
+
+        function calculatePrice() {
+            const basePrice = parseInt(document.getElementById('cleaningType').value);
+            const rooms = parseInt(document.getElementById('rooms').value);
+            let total = basePrice;
+            if (rooms === 2) total += 2000;
+            else if (rooms === 3) total += 4000;
+            else if (rooms >= 4) total += 6000;
+            if (document.getElementById('oven').checked) total += 500;
+            if (document.getElementById('fridge').checked) total += 500;
+            if (document.getElementById('windows').checked) total += 300;
+            if (document.getElementById('balcony').checked) total += 1000;
+            document.getElementById('totalPrice').textContent = total.toLocaleString('ru-RU') + ' ₽';
+        }
+
+        const slider = document.getElementById('comparisonSlider');
+        const sliderHandle = document.getElementById('sliderHandle');
+        const beforeImage = slider.querySelector('.before');
+        let isDragging = false;
+
+        function updateSliderPosition(x) {
+            const rect = slider.getBoundingClientRect();
+            let position = ((x - rect.left) / rect.width) * 100;
+            position = Math.max(0, Math.min(100, position));
+            beforeImage.style.width = position + '%';
+            sliderHandle.style.left = position + '%';
+        }
+
+        sliderHandle.addEventListener('mousedown', () => isDragging = true);
+        document.addEventListener('mouseup', () => isDragging = false);
+        document.addEventListener('mousemove', (e) => { if (isDragging) updateSliderPosition(e.clientX); });
+        sliderHandle.addEventListener('touchstart', () => isDragging = true);
+        document.addEventListener('touchend', () => isDragging = false);
+        document.addEventListener('touchmove', (e) => { if (isDragging) updateSliderPosition(e.touches[0].clientX); });
+        slider.addEventListener('click', (e) => { if (e.target !== sliderHandle && !sliderHandle.contains(e.target)) updateSliderPosition(e.clientX); });
+
+        function toggleMenu() { document.getElementById('nav-menu').classList.toggle('active'); }
+        document.querySelectorAll('nav a').forEach(link => { link.addEventListener('click', () => { document.getElementById('nav-menu').classList.remove('active'); }); });
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const item = question.parentElement;
+                const isActive = item.classList.contains('active');
+                document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+                if (!isActive) item.classList.add('active');
+            });
+        });
+
+        calculatePrice();
+    </script>
+</body>
+</html>
